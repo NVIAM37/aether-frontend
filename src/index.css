@@ -1,0 +1,257 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Modern CSS Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* HTML and body setup */
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  background-color: #f8f9fa;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Better text rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Remove default button styles */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Remove default input styles */
+input,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Focus styles for accessibility */
+*:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Selection styles */
+::selection {
+  background-color: #007bff;
+  color: white;
+}
+
+/* --- Routing Machine Dark Mode Overrides --- */
+.leaflet-routing-container {
+  background-color: rgba(17, 24, 39, 0.9) !important;
+  /* dark bg */
+  color: #e5e7eb !important;
+  /* light text */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  margin-right: 20px !important;
+  margin-top: 20px !important;
+}
+
+.leaflet-routing-alt {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.leaflet-routing-alt h2 {
+  color: #60a5fa !important;
+  /* Blue header */
+  font-size: 16px;
+}
+
+.leaflet-routing-alt h3 {
+  color: #9ca3af !important;
+  font-size: 14px;
+}
+
+.leaflet-routing-alt tr:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.leaflet-routing-icon {
+  background-image: none !important;
+  /* Remove default black icons */
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  color: #fcd34d;
+  /* Yellow arrows */
+}
+
+/* Hide the weird decorative text/icons from default css */
+.leaflet-bar a,
+.leaflet-bar a:hover {
+  background-color: #1f2937 !important;
+  color: white !important;
+  border-bottom: 1px solid #374151;
+}
+
+/* =========================================
+   3D MAP PERSPECTIVE & INTERACTION
+   ========================================= */
+
+/* 1. The Container determines the "Depth" of the 3D space */
+.perspective-container {
+  perspective: 1200px;
+  /* How "deep" the 3D scene looks */
+  transform-style: preserve-3d;
+}
+
+/* 2. Helper to preserve 3D space for children elements */
+.transform-style-3d {
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  /* Hides the back if rotated 180deg */
+}
+
+/* 3. The Map Plate (Default Tilted State) */
+.rotate-plate {
+  /* Initial Isometric Tilt */
+  transform: rotateX(10deg) rotateY(-10deg) rotateZ(0deg) scale(1);
+  transition: transform 0.1s ease-out;
+  /* Fast transition for mouse movement */
+
+  /* The 3D Shadow underneath */
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.6),
+    /* Deep shadow */
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  /* Subtle white border */
+
+  /* Hardware acceleration for smooth animation */
+  will-change: transform;
+}
+
+/* 4. Hover Effect (Optional: if mouse logic fails, this is a fallback) */
+.perspective-container:hover .rotate-plate {
+  box-shadow:
+    0 35px 60px -12px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+
+/* =========================================
+   GLASSMORPHISM CARDS
+   ========================================= */
+
+.glass-card {
+  /* The "Frosted Glass" Effect */
+  background: rgba(21, 22, 33, 0.7);
+  /* Dark semi-transparent background */
+  backdrop-filter: blur(16px);
+  /* Blurs what is behind the card */
+  -webkit-backdrop-filter: blur(16px);
+  /* Safari support */
+
+  /* Border and Shadow */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+
+  /* Smooth movement on hover */
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  background: rgba(26, 27, 38, 0.9);
+  border-color: rgba(255, 255, 255, 0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.5);
+}
+
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+
+/* A gentle floating animation (optional, if you want the map to bob up and down) */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Pulse animation for the map dots */
+@keyframes ping-slow {
+
+  75%,
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+/* Glass Card Polish */
+.glass-card {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+
+/* --- ROUTING MACHINE OVERRIDES --- */
+/* Hide default Leaflet Routing Machine container */
+.leaflet-routing-container {
+  display: none !important;
+}
+
+/* Custom Scrollbar for the route info */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.5);
+  border-radius: 4px;
+}
+
+/* Map Tiles Dark Mode Fix */
+.leaflet-layer {
+  filter: brightness(0.8) contrast(1.2);
+}
+
+/* Map Controls Dark Mode Fix */
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out,
+.leaflet-control-attribution {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
