@@ -13,10 +13,8 @@ import { useSearchParams } from "react-router-dom";
 import "./PathFinder.css";
 
 // --- CONFIGURATION ---
-// --- CONFIGURATION ---
-// Dynamic Backend URL for Mobile/PC compatibility
-const hostname = window.location.hostname;
-const BACKEND_URL = `http://${hostname}:5000`;
+// Use environment variable for backend URL
+const BACKEND_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 // --- CUSTOM ICONS ---
 const createIcon = (color) => new L.Icon({
